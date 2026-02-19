@@ -7,7 +7,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 Create a `.env.local` file in the root directory with the following variables:
 
 ```env
-# Google Sheets API Configuration
+# Google Sheets API Configurations
 # Get these from Google Cloud Console
 
 # Google Service Account Credentials (JSON string)
