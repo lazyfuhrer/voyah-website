@@ -2,16 +2,39 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
+### Environment Variables
+
+Create a `.env.local` file in the root directory with the following variables:
+
+```env
+# Google Sheets API Configuration
+# Get these from Google Cloud Console
+
+# Google Service Account Credentials (JSON string)
+# This should be a JSON string of your service account credentials
+# Example: {"type":"service_account","project_id":"your-project",...}
+GOOGLE_SERVICE_ACCOUNT_CREDENTIALS=
+
+# Google Sheet ID (found in the URL of your Google Sheet)
+# Example: https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/edit
+GOOGLE_SHEET_ID=
+```
+
+**Setup Instructions:**
+1. Go to [Google Cloud Console](https://console.cloud.google.com/)
+2. Create a new project or select an existing one
+3. Enable the Google Sheets API
+4. Create a Service Account and download the JSON credentials
+5. Copy the entire JSON content and paste it as a single-line string in `GOOGLE_SERVICE_ACCOUNT_CREDENTIALS`
+6. Share your Google Sheet with the service account email (found in the JSON)
+7. Copy the Sheet ID from the Google Sheet URL
+
+### Running the Development Server
+
 First, run the development server:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
