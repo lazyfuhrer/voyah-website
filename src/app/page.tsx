@@ -396,7 +396,7 @@ export default function Home() {
                   animation: 'dropdownFadeInUp 0.2s ease-out',
                 }}
               >
-                {["VOYAH", "FREE", "DREAM"].map((model, index) => (
+                {["FREE", "DREAM"].map((model, index) => (
                   <button
                     key={model}
                     onClick={() => {
