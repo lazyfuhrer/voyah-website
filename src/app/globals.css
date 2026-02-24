@@ -8,6 +8,8 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  /* Hide scrollbars everywhere but keep scrolling functional */
+  scrollbar-width: none; /* Firefox */
 }
 
 html,
@@ -26,6 +28,22 @@ body {
   overflow: hidden;
 }
 
+/* Hide scrollbars in WebKit-based browsers (all elements) */
+*::-webkit-scrollbar {
+  display: none;
+}
+
+/* Allow scrolling on smaller screens so the mobile layout isn't clipped */
+@media (max-width: 1024px) {
+  html,
+  body,
+  #__next {
+    height: auto;
+    min-height: 100%;
+    overflow: auto;
+  }
+}
+
 /* Placeholder styling for inputs */
 input::placeholder {
   font-family: 'Inter', sans-serif;
@@ -36,6 +54,16 @@ input::placeholder {
   letter-spacing: -0.31px;
   color: rgba(255, 255, 255, 1);
   opacity: 1;
+}
+
+/* Mobile (430px) placeholder – Figma spec */
+@media (max-width: 430px) {
+  .mobile-coming-soon input::placeholder {
+    font-size: 12px;
+    line-height: 15px;
+    letter-spacing: -0.3125px;
+    color: #FFFFFF;
+  }
 }
 
 /* Dropdown animation - opens upward */
@@ -49,3 +77,4 @@ input::placeholder {
     transform: translateY(0);
   }
 }
+

@@ -28,8 +28,8 @@ function useViewportHeight() {
   return vh;
 }
 
-export default function Home() {
-  const [selectedModel, setSelectedModel] = useState("Choose Model");
+export default function HomeArabic() {
+  const [selectedModel, setSelectedModel] = useState("اختر الطراز");
   const [showDropdown, setShowDropdown] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -61,17 +61,19 @@ export default function Home() {
   // Handle form submission
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
-    if (!name.trim() || !email.trim() || !phone.trim() || selectedModel === "Choose Model") {
+    
+    // Validate form
+    if (!name.trim() || !email.trim() || !phone.trim() || selectedModel === "اختر الطراز") {
       setSubmitStatus("error");
-      setErrorMessage("Please fill in all fields");
+      setErrorMessage("يرجى تعبئة جميع الحقول.");
       return;
     }
 
+    // Validate email format
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       setSubmitStatus("error");
-      setErrorMessage("Please enter a valid email address");
+      setErrorMessage("يرجى إدخال بريد إلكتروني صالح.");
       return;
     }
 
@@ -97,34 +99,37 @@ export default function Home() {
 
       if (response.ok) {
         setSubmitStatus("success");
+        // Reset form
         setName("");
         setEmail("");
         setPhone("");
-        setSelectedModel("Choose Model");
-        setTimeout(() => setSubmitStatus(null), 5000);
+        setSelectedModel("اختر الطراز");
+        // Clear success message after 5 seconds
+        setTimeout(() => {
+          setSubmitStatus(null);
+        }, 5000);
       } else {
         setSubmitStatus("error");
-        setErrorMessage(data.error || "Failed to submit form. Please try again.");
+        setErrorMessage(data.error || "حدث خطأ أثناء إرسال النموذج. يرجى المحاولة مرة أخرى.");
       }
-    } catch {
+    } catch (error) {
       setSubmitStatus("error");
-      setErrorMessage("Network error. Please check your connection and try again.");
+      setErrorMessage("خطأ في الشبكة. يرجى التحقق من الاتصال والمحاولة مجدداً.");
     } finally {
       setIsSubmitting(false);
     }
   };
 
-  // Mobile layout – 430×932 Figma artboard (English)
+  // Mobile layout – Arabic, matches English mobile design with localized text
   if (isMobile) {
     const yScale = Math.min(1, vh / 932);
-    // Keep content grouped but slightly reduce gap between text and form again
     const frame1Top = Math.round(580 * yScale);
     const formTop = Math.round(780 * yScale);
 
     return (
       <div
         className="relative bg-black overflow-x-hidden mobile-coming-soon"
-        style={{ width: "100%", minHeight: "932px" }}
+        style={{ width: "100%", minHeight: "932px", paddingBottom: 24 }}
       >
         {/* Background video */}
         <div className="absolute inset-0 w-full h-full">
@@ -171,7 +176,7 @@ export default function Home() {
         >
           {/* Language pill */}
           <Link
-            href="/ar"
+            href="/"
             className="absolute flex flex-row items-center justify-center box-border"
             style={{
               width: 99,
@@ -201,7 +206,7 @@ export default function Home() {
                 color: "#F4F4F4",
               }}
             >
-              Arabic
+              English
             </span>
           </Link>
 
@@ -228,9 +233,10 @@ export default function Home() {
             <div
               className="flex flex-col items-center"
               style={{ width: 361, height: 103 }}
+              dir="rtl"
             >
               <h1
-                className="text-white uppercase"
+                className="text-white"
                 style={{
                   width: 312,
                   height: 60,
@@ -244,7 +250,7 @@ export default function Home() {
                   margin: "-2px 0 6px",
                 }}
               >
-                COMING SOON
+                قريباً
               </h1>
               <p
                 style={{
@@ -258,8 +264,9 @@ export default function Home() {
                   color: "#EBEBEB",
                 }}
               >
-                We&apos;re building something beautiful. Leave your details and
-                be the first to know when we launch.
+                نعمل على إطلاق تجربة استثنائية. اترك بياناتك لتكون أول{" "}
+                <br />
+                من يعلم عند الإطلاق.
               </p>
             </div>
           </div>
@@ -282,11 +289,12 @@ export default function Home() {
             >
               <input
                 type="text"
-                placeholder="Your Name"
+                placeholder="الاسم الكامل"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
                 className="outline-none box-border w-full"
+                dir="rtl"
                 style={{
                   height: 39,
                   padding: "12px 24px",
@@ -299,15 +307,17 @@ export default function Home() {
                   lineHeight: "15px",
                   letterSpacing: -0.3125,
                   color: "#FFFFFF",
+                  textAlign: "right",
                 }}
               />
               <input
                 type="email"
-                placeholder="Your Email"
+                placeholder="البريد الإلكتروني"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
                 className="outline-none box-border w-full"
+                dir="rtl"
                 style={{
                   height: 39,
                   padding: "12px 24px",
@@ -320,15 +330,17 @@ export default function Home() {
                   lineHeight: "15px",
                   letterSpacing: -0.3125,
                   color: "#FFFFFF",
+                  textAlign: "right",
                 }}
               />
               <input
                 type="tel"
-                placeholder="Your Phone"
+                placeholder="رقم الجوال"
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
                 required
                 className="outline-none box-border w-full"
+                dir="rtl"
                 style={{
                   height: 39,
                   padding: "12px 24px",
@@ -341,6 +353,7 @@ export default function Home() {
                   lineHeight: "15px",
                   letterSpacing: -0.3125,
                   color: "#FFFFFF",
+                  textAlign: "right",
                 }}
               />
               <div
@@ -351,7 +364,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="w-full h-full flex flex-row justify-between items-center outline-none box-border cursor-pointer"
+                  className="w-full h-full flex flex-row-reverse justify-between items-center outline-none box-border cursor-pointer"
                   style={{
                     padding: "12px 24px",
                     gap: 26,
@@ -366,12 +379,20 @@ export default function Home() {
                     color: "#FFFFFF",
                   }}
                 >
-                  <span style={{ margin: "0 auto" }}>{selectedModel}</span>
+                  <span
+                    style={{
+                      textAlign: "right",
+                    }}
+                  >
+                    {selectedModel}
+                  </span>
                   <ChevronDown
                     style={{
                       width: 8,
                       height: 16,
-                      transform: showDropdown ? "rotate(270deg)" : "rotate(90deg)",
+                      transform: showDropdown
+                        ? "rotate(270deg)"
+                        : "rotate(90deg)",
                     }}
                   />
                 </button>
@@ -396,7 +417,7 @@ export default function Home() {
                           setSelectedModel(model);
                           setShowDropdown(false);
                         }}
-                        className="w-full text-left relative"
+                        className="w-full text-right relative"
                         style={{
                           paddingTop: 14,
                           paddingRight: 24,
@@ -424,7 +445,7 @@ export default function Home() {
                           <span
                             className="absolute"
                             style={{
-                              right: 24,
+                              left: 24,
                               top: "50%",
                               transform: "translateY(-50%)",
                               fontSize: 12,
@@ -456,11 +477,11 @@ export default function Home() {
                 fontSize: 12,
                 lineHeight: "15px",
                 textAlign: "center",
-                letterSpacing: 0.4875,
+                letterSpacing: "0.4875px",
                 color: "#FFFFFF",
               }}
             >
-              {isSubmitting ? "SUBMITTING..." : "NOTIFY ME"}
+              {isSubmitting ? "جاري الإرسال..." : "أشعرني عند الإطلاق"}
             </button>
 
             {submitStatus && (
@@ -477,7 +498,7 @@ export default function Home() {
                 }}
               >
                 {submitStatus === "success"
-                  ? "Thank you! We'll notify you when we launch."
+                  ? "✓ شكراً لك! سنقوم بإشعارك عند الإطلاق."
                   : errorMessage}
               </div>
             )}
@@ -487,7 +508,6 @@ export default function Home() {
     );
   }
 
-  // Desktop layout – original design (unchanged)
   return (
     <div className="relative w-screen h-screen bg-black overflow-hidden">
       {/* Background Video */}
@@ -506,34 +526,34 @@ export default function Home() {
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black/17" />
 
-      {/* Single left-aligned content container - all elements share same left edge */}
-      <div
+      {/* Content container - Arabic layout */}
+      <div 
         className="absolute flex flex-col"
         style={{
-          left: "124px",
-          right: "124px",
-          top: "11.15%",
-          bottom: "11.15%",
+          left: '124px',
+          right: '124px',
+          top: '11.15%',
+          bottom: '11.15%',
           gap: 0,
         }}
       >
         {/* Language Selector Button */}
-        <div className="flex-none" style={{ marginBottom: "auto" }}>
-          <Link
-            href="/ar"
+        <div className="flex-none" style={{ marginBottom: 'auto' }}>
+          <Link 
+            href="/"
             className="flex flex-row items-center justify-center box-border"
             style={{
-              paddingTop: 6,
-              paddingRight: 18,
-              paddingBottom: 6,
-              paddingLeft: 18,
-              gap: 5,
-              width: "clamp(100px, 8.13vw, 117px)",
-              height: "clamp(35px, 4.46vh, 40px)",
-              background: "rgba(151, 151, 151, 0.1)",
-              border: "0.8px solid #ECECEC",
-              borderRadius: 30,
-              fontFamily: "Inter, sans-serif",
+              paddingTop: '6px',
+              paddingRight: '18px',
+              paddingBottom: '6px',
+              paddingLeft: '18px',
+              gap: '5px',
+              width: 'clamp(100px, 8.13vw, 117px)',
+              height: 'clamp(35px, 4.46vh, 40px)',
+              background: 'rgba(151, 151, 151, 0.1)',
+              border: '0.8px solid #ECECEC',
+              borderRadius: '30px',
+              fontFamily: 'Inter, sans-serif',
             }}
           >
             <Image
@@ -541,41 +561,47 @@ export default function Home() {
               alt="Language"
               width={24}
               height={24}
-              style={{
-                width: "clamp(20px, 1.67vw, 24px)",
-                height: "clamp(20px, 1.67vw, 24px)",
-              }}
+              className="flex-none"
+              style={{ width: 'clamp(20px, 1.67vw, 24px)', height: 'clamp(20px, 1.67vw, 24px)' }}
             />
-            <span
+            <span 
               className="text-[#F4F4F4] font-normal"
               style={{
-                fontSize: "clamp(14px, 1.25vw, 18px)",
-                lineHeight: "155.56%",
+                fontSize: 'clamp(14px, 1.25vw, 18px)',
+                lineHeight: '155.56%',
               }}
             >
-              Arabic
+              English
             </span>
           </Link>
         </div>
 
-        {/* Main content - Logo, COMING SOON, Description - all left aligned */}
-        <div
-          className="flex flex-col flex-none"
+        {/* Main content - Logo, COMING SOON, Description - right aligned for Arabic */}
+        <div 
+          className="flex-none self-end items-end"
           style={{
-            width: 507,
-            gap: 7,
-            marginBottom: 31,
+            width: '507px',
+            gap: '7px',
+            marginBottom: '31px',
           }}
+          dir="rtl"
         >
           {/* Logo */}
-          <div className="flex-none" style={{ width: 158, height: 56 }}>
+          <div
+            className="flex flex-col flex-none"
+            style={{
+              width: "100%",
+              height: "56px",
+              display: "flex",
+              justifyContent: "flex-end",
+            }}
+          >
             <Image
               src="/logo.svg"
               alt="VOYAH Logo"
               width={158}
               height={56}
-              className="w-full h-full"
-              style={{ objectFit: "contain", objectPosition: "left top" }}
+              style={{ objectFit: "contain"}}
             />
           </div>
 
@@ -583,250 +609,268 @@ export default function Home() {
           <div
             className="flex flex-col flex-none"
             style={{
-              width: "100%",
-              gap: 4,
+              width: '100%',
+              gap: '4px',
             }}
           >
             {/* COMING SOON Heading */}
             <h1
-              className="text-white font-normal uppercase whitespace-nowrap"
+              className="text-white font-normal whitespace-nowrap"
               style={{
-                width: "100%",
-                height: 60,
-                fontSize: 46,
-                lineHeight: "60px",
-                letterSpacing: 4.76,
-                textAlign: "left",
-                fontFamily: "Inter",
+                width: '100%',
+                height: '60px',
+                fontSize: '46px',
+                lineHeight: '60px',
+                letterSpacing: '4.76px',
+                textAlign: 'right',
+                fontFamily: 'Inter',
                 fontWeight: 400,
-                fontStyle: "normal",
-                color: "rgba(255, 255, 255, 1)",
+                fontStyle: 'normal',
+                color: 'rgba(255, 255, 255, 1)',
                 margin: 0,
                 padding: 0,
               }}
             >
-              COMING SOON
+              قريباً
             </h1>
 
-            {/* Description Text */}
-            <p
-              className="font-normal"
-              style={{
-                width: "100%",
-                fontFamily: "Inter",
-                fontWeight: 400,
-                fontStyle: "normal",
-                fontSize: 18,
-                lineHeight: "28px",
-                letterSpacing: 0,
-                color: "rgba(235, 235, 235, 1)",
-                textAlign: "left",
-                margin: 0,
-                padding: 0,
-              }}
-            >
-              We&apos;re building something beautiful. Leave your details and be
-              the first to know when we launch.
-            </p>
+        {/* Description Text */}
+        <p 
+          className="font-normal"
+          style={{
+            width: '100%',
+            fontFamily: 'Inter',
+            fontWeight: 400,
+            fontStyle: 'normal',
+            fontSize: '18px',
+            lineHeight: '28px',
+            letterSpacing: '0px',
+            color: 'rgba(235, 235, 235, 1)',
+            textAlign: 'right',
+            margin: 0,
+            padding: 0,
+          }}
+        >
+          نعمل على إطلاق تجربة استثنائية. اترك بياناتك لتكون أول
+          <br />
+          من يعلم عند الإطلاق.
+        </p>
           </div>
         </div>
 
-        {/* Form Section - same left edge as content above */}
+        {/* Form Section - same field order as English, RTL text inside inputs */}
         <form
           onSubmit={handleSubmit}
-          className="flex flex-col gap-[14px] flex-none"
+          className="flex flex-col gap-[14px] flex-none self-end"
           style={{
-            width: 1152,
+            width: '1152px',
           }}
         >
-          <div className="flex flex-row items-center gap-[14px]">
+          {/* Container for inputs */}
+          <div
+            className="flex flex-row items-center"
+            style={{ gap: "10px" }}
+          >
             {/* Name Input */}
             <input
               type="text"
-              placeholder="Your Name"
+              placeholder="الاسم الكامل"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
               className="flex-none outline-none box-border"
+              dir="rtl"
               style={{
-                width: 224,
-                height: 50,
-                borderRadius: 28,
-                borderWidth: 0.8,
-                paddingTop: 16,
-                paddingRight: 24,
-                paddingBottom: 16,
-                paddingLeft: 24,
-                background: "rgba(255, 255, 255, 0.1)",
-                border: "0.8px solid rgba(170, 170, 170, 1)",
-                fontFamily: "Inter",
+                width: '211.75px',
+                height: '50px',
+                borderRadius: '28px',
+                borderWidth: '0.8px',
+                paddingTop: '16px',
+                paddingRight: '24px',
+                paddingBottom: '16px',
+                paddingLeft: '24px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '0.8px solid rgba(170, 170, 170, 1)',
+                fontFamily: 'Inter',
                 fontWeight: 400,
-                fontStyle: "normal",
-                fontSize: 16,
-                lineHeight: "100%",
-                letterSpacing: -0.31,
-                color: "rgba(255, 255, 255, 1)",
+                fontStyle: 'normal',
+                fontSize: '16px',
+                lineHeight: '100%',
+                letterSpacing: '-0.31px',
+                color: 'rgba(255, 255, 255, 1)',
+                textAlign: 'right',
+                whiteSpace: 'nowrap',
               }}
             />
 
             {/* Email Input */}
             <input
               type="email"
-              placeholder="Your Email"
+              placeholder="البريد الإلكتروني"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
               className="flex-none outline-none box-border"
+              dir="rtl"
               style={{
-                width: 224,
-                height: 50,
-                borderRadius: 28,
-                borderWidth: 0.8,
-                paddingTop: 16,
-                paddingRight: 24,
-                paddingBottom: 16,
-                paddingLeft: 24,
-                background: "rgba(255, 255, 255, 0.1)",
-                border: "0.8px solid rgba(170, 170, 170, 1)",
-                fontFamily: "Inter",
+                width: '211.75px',
+                height: '50px',
+                borderRadius: '28px',
+                borderWidth: '0.8px',
+                paddingTop: '16px',
+                paddingRight: '24px',
+                paddingBottom: '16px',
+                paddingLeft: '24px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '0.8px solid rgba(170, 170, 170, 1)',
+                fontFamily: 'Inter',
                 fontWeight: 400,
-                fontStyle: "normal",
-                fontSize: 16,
-                lineHeight: "100%",
-                letterSpacing: -0.31,
-                color: "rgba(255, 255, 255, 1)",
+                fontStyle: 'normal',
+                fontSize: '16px',
+                lineHeight: '100%',
+                letterSpacing: '-0.31px',
+                color: 'rgba(255, 255, 255, 1)',
+                textAlign: 'right',
+                whiteSpace: 'nowrap',
               }}
             />
 
             {/* Phone Input */}
             <input
               type="tel"
-              placeholder="Your Phone"
+              placeholder="رقم الجوال"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               required
               className="flex-none outline-none box-border"
+              dir="rtl"
               style={{
-                width: 224,
-                height: 50,
-                borderRadius: 28,
-                borderWidth: 0.8,
-                paddingTop: 16,
-                paddingRight: 24,
-                paddingBottom: 16,
-                paddingLeft: 24,
-                background: "rgba(255, 255, 255, 0.1)",
-                border: "0.8px solid rgba(170, 170, 170, 1)",
-                fontFamily: "Inter",
+                width: '211.75px',
+                height: '50px',
+                borderRadius: '28px',
+                borderWidth: '0.8px',
+                paddingTop: '16px',
+                paddingRight: '24px',
+                paddingBottom: '16px',
+                paddingLeft: '24px',
+                background: 'rgba(255, 255, 255, 0.1)',
+                border: '0.8px solid rgba(170, 170, 170, 1)',
+                fontFamily: 'Inter',
                 fontWeight: 400,
-                fontStyle: "normal",
-                fontSize: 16,
-                lineHeight: "100%",
-                letterSpacing: -0.31,
-                color: "rgba(255, 255, 255, 1)",
+                fontStyle: 'normal',
+                fontSize: '16px',
+                lineHeight: '100%',
+                letterSpacing: '-0.31px',
+                color: 'rgba(255, 255, 255, 1)',
+                textAlign: 'right',
+                whiteSpace: 'nowrap',
               }}
             />
 
             {/* Model Dropdown */}
-            <div
-              ref={dropdownRef}
-              className="flex-none relative"
-              style={{ width: 224, height: 50 }}
-            >
+            <div ref={dropdownRef} className="flex-none relative" style={{ width: '211.75px', height: '50px' }}>
               <button
-                type="button"
                 onClick={() => setShowDropdown(!showDropdown)}
-                className="w-full h-full flex flex-row items-center justify-between outline-none box-border cursor-pointer transition-all duration-200"
+                className="w-full h-full flex flex-row-reverse items-center justify-between outline-none box-border cursor-pointer transition-all duration-200"
                 style={{
-                  borderRadius: 28,
-                  borderWidth: 0.8,
-                  paddingTop: 16,
-                  paddingRight: 24,
-                  paddingBottom: 16,
-                  paddingLeft: 24,
-                  background: showDropdown
-                    ? "rgba(255, 255, 255, 0.15)"
-                    : "rgba(255, 255, 255, 0.1)",
-                  border: "0.8px solid rgba(170, 170, 170, 1)",
-                  fontFamily: "Inter",
+                  borderRadius: '28px',
+                  borderWidth: '0.8px',
+                  paddingTop: '16px',
+                  paddingRight: '24px',
+                  paddingBottom: '16px',
+                  paddingLeft: '24px',
+                  background: showDropdown ? 'rgba(255, 255, 255, 0.15)' : 'rgba(255, 255, 255, 0.1)',
+                  border: '0.8px solid rgba(170, 170, 170, 1)',
+                  fontFamily: 'Inter',
                   fontWeight: 400,
-                  fontStyle: "normal",
-                  fontSize: 16,
-                  lineHeight: "100%",
-                  letterSpacing: -0.31,
-                  color: "rgba(255, 255, 255, 1)",
+                  fontStyle: 'normal',
+                  fontSize: '16px',
+                  lineHeight: '100%',
+                  letterSpacing: '-0.31px',
+                  color: 'rgba(255, 255, 255, 1)',
+                }}
+                onMouseEnter={(e) => {
+                  if (!showDropdown) {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.15)';
+                    e.currentTarget.style.borderColor = 'rgba(200, 200, 200, 1)';
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  if (!showDropdown) {
+                    e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                    e.currentTarget.style.borderColor = 'rgba(170, 170, 170, 1)';
+                  }
                 }}
               >
-                <span
-                  className="flex-none"
-                  style={{
-                    opacity: selectedModel === "Choose Model" ? 0.7 : 1,
+                <span 
+                  className="flex-none transition-opacity duration-200"
+                  style={{ 
+                    opacity: selectedModel === 'اختر الطراز' ? 0.7 : 1,
+                    textAlign: 'right',
                   }}
                 >
                   {selectedModel}
                 </span>
                 <ChevronDown
-                  className="flex-none"
-                  style={{
-                    width: 8,
-                    height: 16,
-                    transform: showDropdown ? "rotate(270deg)" : "rotate(90deg)",
+                  className="flex-none transition-transform duration-200"
+                  style={{ 
+                    width: '8px',
+                    height: '16px',
+                    transform: showDropdown ? 'rotate(270deg)' : 'rotate(90deg)',
                     opacity: 0.8,
                   }}
                 />
               </button>
               {showDropdown && (
-                <div
+                <div 
                   className="absolute bottom-[54px] left-0 w-full z-20 overflow-hidden"
                   style={{
-                    background: "rgba(20, 20, 20, 0.98)",
-                    border: "0.8px solid rgba(170, 170, 170, 0.6)",
-                    borderRadius: 12,
-                    boxShadow:
-                      "0 -8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset",
-                    backdropFilter: "blur(20px)",
+                    background: 'rgba(20, 20, 20, 0.98)',
+                    border: '0.8px solid rgba(170, 170, 170, 0.6)',
+                    borderRadius: '12px',
+                    boxShadow: '0 -8px 32px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.05) inset',
+                    backdropFilter: 'blur(20px)',
+                    animation: 'dropdownFadeInUp 0.2s ease-out',
                   }}
                 >
                   {["FREE", "DREAM"].map((model, index) => (
                     <button
                       key={model}
-                      type="button"
                       onClick={() => {
                         setSelectedModel(model);
                         setShowDropdown(false);
                       }}
-                      className="w-full text-left relative"
+                      className="w-full text-right transition-all duration-150 relative"
                       style={{
-                        paddingTop: 14,
-                        paddingRight: 24,
-                        paddingBottom: 14,
-                        paddingLeft: 24,
-                        fontFamily: "Inter",
+                        paddingTop: '14px',
+                        paddingRight: '24px',
+                        paddingBottom: '14px',
+                        paddingLeft: '24px',
+                        fontFamily: 'Inter',
                         fontWeight: 400,
-                        fontSize: 16,
-                        lineHeight: "19px",
-                        letterSpacing: -0.31,
-                        color:
-                          selectedModel === model
-                            ? "rgba(255, 255, 255, 1)"
-                            : "rgba(255, 255, 255, 0.9)",
-                        background: "transparent",
-                        border: "none",
-                        borderBottom:
-                          index < 2
-                            ? "0.8px solid rgba(170, 170, 170, 0.15)"
-                            : "none",
+                        fontSize: '16px',
+                        lineHeight: '19px',
+                        letterSpacing: '-0.31px',
+                        color: selectedModel === model ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.9)',
+                        background: 'transparent',
+                        border: 'none',
+                        borderBottom: index < 2 ? '0.8px solid rgba(170, 170, 170, 0.15)' : 'none',
+                      }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.background = 'rgba(255, 255, 255, 0.08)';
+                        e.currentTarget.style.color = 'rgba(255, 255, 255, 1)';
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.background = 'transparent';
+                        e.currentTarget.style.color = selectedModel === model ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.9)';
                       }}
                     >
                       {model}
                       {selectedModel === model && (
-                        <span
-                          className="absolute"
+                        <span 
+                          className="absolute left-[24px] top-1/2 -translate-y-1/2"
                           style={{
-                            right: 24,
-                            top: "50%",
-                            transform: "translateY(-50%)",
-                            fontSize: 12,
+                            fontSize: '12px',
                             opacity: 0.6,
                           }}
                         >
@@ -840,60 +884,84 @@ export default function Home() {
             </div>
 
             {/* NOTIFY ME Button */}
-            <button
+            <button 
               type="submit"
               disabled={isSubmitting}
               className="flex flex-row items-center justify-center flex-none box-border outline-none cursor-pointer transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               style={{
-                paddingTop: 13,
-                paddingRight: 55,
-                paddingBottom: 13,
-                paddingLeft: 55,
-                gap: 10,
-                width: 212,
-                height: 50,
-                background: isSubmitting
-                  ? "rgba(151, 151, 151, 0.3)"
-                  : "rgba(151, 151, 151, 0.2)",
-                border: "0.8px solid rgba(170, 170, 170, 1)",
-                borderRadius: 80,
-                fontFamily: "Inter, sans-serif",
+                paddingTop: '13px',
+                paddingRight: '55px',
+                paddingBottom: '13px',
+                paddingLeft: '55px',
+                gap: '10px',
+                width: '261px',
+                height: '50px',
+                background: isSubmitting ? 'rgba(151, 151, 151, 0.3)' : 'rgba(151, 151, 151, 0.2)',
+                border: '0.8px solid rgba(170, 170, 170, 1)',
+                borderRadius: '80px',
+                fontFamily: 'Inter, sans-serif',
+              }}
+              onMouseEnter={(e) => {
+                if (!isSubmitting) {
+                  e.currentTarget.style.background = 'rgba(151, 151, 151, 0.3)';
+                  e.currentTarget.style.borderColor = 'rgba(200, 200, 200, 1)';
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (!isSubmitting) {
+                  e.currentTarget.style.background = 'rgba(151, 151, 151, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(170, 170, 170, 1)';
+                  e.currentTarget.style.transform = 'scale(1)';
+                }
+              }}
+              onMouseDown={(e) => {
+                if (!isSubmitting) {
+                  e.currentTarget.style.transform = 'scale(0.98)';
+                }
+              }}
+              onMouseUp={(e) => {
+                if (!isSubmitting) {
+                  e.currentTarget.style.transform = 'scale(1.02)';
+                }
               }}
             >
-              <span
-                className="text-white font-medium text-center uppercase"
+              <span 
+                className="text-white font-medium text-center"
                 style={{
-                  fontSize: "clamp(14px, 1.25vw, 18px)",
-                  lineHeight: "133.33%",
+                  fontSize: 'clamp(14px, 1.25vw, 18px)',
+                  lineHeight: '133.33%',
+                  whiteSpace: 'nowrap',
                 }}
               >
-                {isSubmitting ? "SUBMITTING..." : "NOTIFY ME"}
+                {isSubmitting ? "جاري الإرسال..." : "أشعرني عند الإطلاق"}
               </span>
             </button>
           </div>
 
           {/* Status Messages */}
           {submitStatus && (
-            <div
+            <div 
+              className="flex-none"
               style={{
-                width: "100%",
-                paddingTop: 12,
+                width: '100%',
+                paddingTop: '12px',
+                paddingRight: '0px',
               }}
             >
               <div
+                className="text-right"
                 style={{
-                  fontFamily: "Inter",
-                  fontSize: 14,
-                  lineHeight: "20px",
-                  color:
-                    submitStatus === "success"
-                      ? "rgba(76, 175, 80, 1)"
-                      : "rgba(244, 67, 54, 1)",
+                  fontFamily: 'Inter',
+                  fontSize: '14px',
+                  lineHeight: '20px',
+                  color: submitStatus === 'success' ? 'rgba(76, 175, 80, 1)' : 'rgba(244, 67, 54, 1)',
                 }}
               >
-                {submitStatus === "success"
-                  ? "✓ Thank you! We'll notify you when we launch."
-                  : `✗ ${errorMessage}`}
+                {submitStatus === 'success' 
+                  ? '✓ شكراً لك! سنقوم بإشعارك عند الإطلاق.'
+                  : `✗ ${errorMessage}`
+                }
               </div>
             </div>
           )}
