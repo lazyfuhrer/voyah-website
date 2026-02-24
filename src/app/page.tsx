@@ -8,13 +8,24 @@ import { ChevronDown } from "lucide-react";
 function useMobile() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1024px)");
+    const mq = window.matchMedia("(max-width: 768px)");
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
   return isMobile;
+}
+
+function useViewportWidth() {
+  const [vw, setVw] = useState(430);
+  useEffect(() => {
+    const update = () => setVw(window.innerWidth || 430);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return vw;
 }
 
 export default function Home() {
@@ -28,6 +39,7 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
+  const vw = useViewportWidth();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -107,6 +119,7 @@ export default function Home() {
     // Pixel-perfect positions from Figma artboard (430×932)
     const frame1Top = 466;
     const formTop = 650;
+    const scale = Math.min(1, vw / 430);
 
     return (
       <div
@@ -146,14 +159,16 @@ export default function Home() {
           }}
         />
 
-        {/* 430×932 content frame */}
+        {/* 430×932 content frame (scaled to fit small screens) */}
         <div
-          className="relative z-10"
+          className="absolute z-10"
           style={{
             width: 430,
-            maxWidth: "100%",
             height: 932,
-            margin: "0 auto",
+            left: "50%",
+            top: 0,
+            transform: `translateX(-50%) scale(${scale})`,
+            transformOrigin: "top center",
           }}
         >
           {/* Language pill */}

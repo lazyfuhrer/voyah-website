@@ -8,7 +8,7 @@ import { ChevronDown } from "lucide-react";
 function useMobile() {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
-    const mq = window.matchMedia("(max-width: 1024px)");
+    const mq = window.matchMedia("(max-width: 768px)");
     const update = () => setIsMobile(mq.matches);
     update();
     mq.addEventListener("change", update);
@@ -28,6 +28,17 @@ function useViewportHeight() {
   return vh;
 }
 
+function useViewportWidth() {
+  const [vw, setVw] = useState(430);
+  useEffect(() => {
+    const update = () => setVw(window.innerWidth || 430);
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+  return vw;
+}
+
 export default function HomeArabic() {
   const [selectedModel, setSelectedModel] = useState("اختر الطراز");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -40,6 +51,7 @@ export default function HomeArabic() {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
   const vh = useViewportHeight();
+  const vw = useViewportWidth();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -125,6 +137,7 @@ export default function HomeArabic() {
     const yScale = Math.min(1, vh / 932);
     const frame1Top = Math.round(580 * yScale);
     const formTop = Math.round(780 * yScale);
+    const scale = Math.min(1, vw / 430);
 
     return (
       <div
@@ -166,12 +179,14 @@ export default function HomeArabic() {
 
         {/* 430×932 content frame */}
         <div
-          className="relative z-10"
+          className="absolute z-10"
           style={{
             width: 430,
-            maxWidth: "100%",
             height: 932,
-            margin: "0 auto",
+            left: "50%",
+            top: 0,
+            transform: `translateX(-50%) scale(${scale})`,
+            transformOrigin: "top center",
           }}
         >
           {/* Language pill */}
