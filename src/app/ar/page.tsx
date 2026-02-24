@@ -367,6 +367,7 @@ export default function HomeArabic() {
                 <button
                   type="button"
                   onClick={() => setShowDropdown(!showDropdown)}
+                  dir="rtl"
                   className="w-full h-full flex flex-row justify-between items-center outline-none box-border cursor-pointer"
                   style={{
                     padding: "12px 24px",
@@ -382,7 +383,15 @@ export default function HomeArabic() {
                     color: "#FFFFFF",
                   }}
                 >
-                  <span style={{ margin: "0 auto" }}>{selectedModel}</span>
+                  <span
+                    style={{
+                      flex: 1,
+                      textAlign: "right",
+                      direction: "rtl",
+                    }}
+                  >
+                    {selectedModel}
+                  </span>
                   <ChevronDown
                     style={{
                       width: 8,
