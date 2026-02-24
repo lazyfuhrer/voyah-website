@@ -124,7 +124,7 @@ export default function Home() {
     return (
       <div
         className="relative bg-black overflow-x-hidden mobile-coming-soon"
-        style={{ width: "100%", minHeight: "932px" }}
+        style={{ width: "100%", minHeight: "100vh" }}
       >
         {/* Background video */}
         <div className="absolute inset-0 w-full h-full">
