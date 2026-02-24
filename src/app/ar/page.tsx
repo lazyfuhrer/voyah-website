@@ -17,17 +17,6 @@ function useMobile() {
   return isMobile;
 }
 
-function useViewportHeight() {
-  const [vh, setVh] = useState(932);
-  useEffect(() => {
-    const update = () => setVh(window.innerHeight || 932);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return vh;
-}
-
 function useViewportWidth() {
   const [vw, setVw] = useState(430);
   useEffect(() => {
@@ -50,7 +39,6 @@ export default function HomeArabic() {
   const [errorMessage, setErrorMessage] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
-  const vh = useViewportHeight();
   const vw = useViewportWidth();
 
   // Close dropdown when clicking outside
@@ -134,15 +122,15 @@ export default function HomeArabic() {
 
   // Mobile layout – Arabic, matches English mobile design with localized text
   if (isMobile) {
-    const yScale = Math.min(1, vh / 932);
-    const frame1Top = Math.round(580 * yScale);
-    const formTop = Math.round(780 * yScale);
+    // Pixel-perfect positions from Figma artboard (430×932)
+    const frame1Top = 466;
+    const formTop = 650;
     const scale = Math.min(1, vw / 430);
 
     return (
       <div
         className="relative bg-black overflow-x-hidden mobile-coming-soon"
-        style={{ width: "100%", minHeight: "100vh", paddingBottom: 24 }}
+        style={{ width: "100%", minHeight: "100vh" }}
       >
         {/* Background video */}
         <div className="absolute inset-0 w-full h-full">
@@ -251,7 +239,7 @@ export default function HomeArabic() {
               dir="rtl"
             >
               <h1
-                className="text-white"
+                className="text-white uppercase"
                 style={{
                   width: 312,
                   height: 60,
@@ -379,7 +367,7 @@ export default function HomeArabic() {
                 <button
                   type="button"
                   onClick={() => setShowDropdown(!showDropdown)}
-                  className="w-full h-full flex flex-row-reverse justify-between items-center outline-none box-border cursor-pointer"
+                  className="w-full h-full flex flex-row justify-between items-center outline-none box-border cursor-pointer"
                   style={{
                     padding: "12px 24px",
                     gap: 26,
@@ -394,13 +382,7 @@ export default function HomeArabic() {
                     color: "#FFFFFF",
                   }}
                 >
-                  <span
-                    style={{
-                      textAlign: "right",
-                    }}
-                  >
-                    {selectedModel}
-                  </span>
+                  <span style={{ margin: "0 auto" }}>{selectedModel}</span>
                   <ChevronDown
                     style={{
                       width: 8,
@@ -432,7 +414,7 @@ export default function HomeArabic() {
                           setSelectedModel(model);
                           setShowDropdown(false);
                         }}
-                        className="w-full text-right relative"
+                        className="w-full text-left relative"
                         style={{
                           paddingTop: 14,
                           paddingRight: 24,
@@ -460,7 +442,7 @@ export default function HomeArabic() {
                           <span
                             className="absolute"
                             style={{
-                              left: 24,
+                              right: 24,
                               top: "50%",
                               transform: "translateY(-50%)",
                               fontSize: 12,
