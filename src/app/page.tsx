@@ -17,17 +17,6 @@ function useMobile() {
   return isMobile;
 }
 
-function useViewportHeight() {
-  const [vh, setVh] = useState(932);
-  useEffect(() => {
-    const update = () => setVh(window.innerHeight || 932);
-    update();
-    window.addEventListener("resize", update);
-    return () => window.removeEventListener("resize", update);
-  }, []);
-  return vh;
-}
-
 export default function Home() {
   const [selectedModel, setSelectedModel] = useState("Choose Model");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -39,7 +28,6 @@ export default function Home() {
   const [errorMessage, setErrorMessage] = useState("");
   const dropdownRef = useRef<HTMLDivElement>(null);
   const isMobile = useMobile();
-  const vh = useViewportHeight();
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -116,10 +104,9 @@ export default function Home() {
 
   // Mobile layout – 430×932 Figma artboard (English)
   if (isMobile) {
-    const yScale = Math.min(1, vh / 932);
-    // Keep content grouped but slightly reduce gap between text and form again
-    const frame1Top = Math.round(580 * yScale);
-    const formTop = Math.round(780 * yScale);
+    // Pixel-perfect positions from Figma artboard (430×932)
+    const frame1Top = 466;
+    const formTop = 650;
 
     return (
       <div
