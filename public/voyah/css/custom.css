@@ -1,0 +1,29 @@
+/* ===== ICON SIZE ===== */
+footer a img {
+  width: 28px !important;
+  height: 28px !important;
+}
+
+/* ===== PREVENT SHRINK ===== */
+footer a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+/* ===== FOOTER LAYOUT ===== */
+.footer-bottom {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding-right: 20px; /* adjust spacing from edge */
+}
+
+/* ===== ICONS RIGHT ALIGN ===== */
+.footer-bottom > div:last-child {
+  display: flex;
+  gap: 12px;
+  margin-left: auto;
+}
