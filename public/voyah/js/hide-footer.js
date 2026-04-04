@@ -1,27 +1,22 @@
 window.addEventListener("load", function () {
 
-  function removeFooterContactInfo() {
-    const el = document.querySelector(
+  function removeFooterPhone() {
+    const contactCol = document.querySelector(
       "#colophon div.w-full.md\\:w-2\\/5:not(.max-md\\:mt-5)"
     );
-    if (el) el.remove();
-  }
-
-  function removeFooterPolicies() {
-    const el = document.querySelector(
-      "#colophon div.w-full.md\\:w-2\\/5.max-md\\:mt-5"
-    );
-    if (el) el.remove();
+    if (!contactCol) return;
+    const phoneSpan = contactCol.querySelector('span[dir="ltr"]');
+    if (!phoneSpan) return;
+    const row = phoneSpan.closest("div");
+    if (row) row.remove();
   }
 
   // Run once
-  removeFooterContactInfo();
-  removeFooterPolicies();
+  removeFooterPhone();
 
   // Watch for Alpine rendering / changes
   const observer = new MutationObserver(() => {
-    removeFooterContactInfo();
-    removeFooterPolicies();
+    removeFooterPhone();
   });
 
   observer.observe(document.body, {
