@@ -1,11 +1,69 @@
-/* ===== ICON SIZE ===== */
-footer a img {
-  width: 28px !important;
-  height: 28px !important;
+/* ===== FOOTER SOCIAL COLUMN (responsive) ===== */
+/*
+ * Below md (768px): icons start-aligned with contact column (same edge as Contact Info).
+ * md and up: third column, icons right-aligned in row layout.
+ */
+#colophon > div:first-child > div:last-child {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  /* Space between stacked contact/address and social icons on small screens */
+  margin-top: 1.5rem;
 }
 
-/* ===== PREVENT SHRINK ===== */
-footer a {
+@media (min-width: 768px) {
+  #colophon > div:first-child > div:last-child {
+    justify-content: flex-end;
+    margin-top: 0;
+  }
+}
+
+#colophon [x-data*="contactLinks"] {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  align-self: flex-start;
+  gap: 0.5rem;
+  max-width: min(100%, 11rem);
+  width: auto;
+  margin-left: 0;
+  margin-right: 0;
+  box-sizing: border-box;
+}
+
+/* Slightly wider wrap band when icons are 28px (640px–767px) */
+@media (min-width: 640px) and (max-width: 767px) {
+  #colophon [x-data*="contactLinks"] {
+    max-width: min(100%, 13.75rem);
+  }
+}
+
+@media (min-width: 768px) {
+  #colophon [x-data*="contactLinks"] {
+    justify-content: flex-end;
+    align-self: flex-end;
+    max-width: none;
+    gap: 1rem;
+  }
+}
+
+/* Icon size: smaller on narrow viewports */
+footer#colophon [x-data*="contactLinks"] img {
+  width: 24px !important;
+  height: 24px !important;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  footer#colophon [x-data*="contactLinks"] img {
+    width: 28px !important;
+    height: 28px !important;
+  }
+}
+
+/* Tap targets + alignment for social links only */
+#colophon [x-data*="contactLinks"] a {
   display: inline-flex;
   align-items: center;
   justify-content: center;
