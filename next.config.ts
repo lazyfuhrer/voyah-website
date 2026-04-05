@@ -83,6 +83,10 @@ const nextConfig: NextConfig = {
         destination: "/voyah/ar/contact-us/index.html",
       },
       {
+        source: "/ar/contact-us/thankyou",
+        destination: "/voyah/ar/contact-us/thankyou.html",
+      },
+      {
         source: "/ar/:path(voyah-dream|voyah-free|privacy-policy|terms-of-use)",
         destination: "/voyah/ar/:path/index.html",
       },

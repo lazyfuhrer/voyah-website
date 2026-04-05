@@ -492,58 +492,6 @@ wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ 'ltr' ] } );
             var trafficScript = document.createElement('script'); trafficScript.src = 'https://img1.wsimg.com/signals/js/clients/scc-c2/scc-c2.min.js'; window.document.head.appendChild(trafficScript);</script>
 		<script>window.addEventListener('click', function (elem) { var _elem$target, _elem$target$dataset, _window, _window$_trfq; return (elem === null || elem === void 0 ? void 0 : (_elem$target = elem.target) === null || _elem$target === void 0 ? void 0 : (_elem$target$dataset = _elem$target.dataset) === null || _elem$target$dataset === void 0 ? void 0 : _elem$target$dataset.eid) && ((_window = window) === null || _window === void 0 ? void 0 : (_window$_trfq = _window._trfq) === null || _window$_trfq === void 0 ? void 0 : _window$_trfq.push(["cmdLogEvent", "click", elem.target.dataset.eid]));});</script>
 		<script src='https://img1.wsimg.com/traffic-assets/js/tccl-tti.min.js' onload="window.tti.calculateTTI()"></script>
-		
-<!-- #region agent log -->
-<script>
-(function () {
-  function logLayout(runId, phase) {
-    var footer = document.getElementById("colophon");
-    var page = document.getElementById("page");
-    var content = document.getElementById("content");
-    var primary = document.getElementById("primary");
-    var rect = footer ? footer.getBoundingClientRect() : null;
-    var fp = footer && footer.parentElement ? footer.parentElement.id : null;
-    var cn = content && content.nextElementSibling ? content.nextElementSibling.id || content.nextElementSibling.tagName : null;
-    var fpv = footer && footer.previousElementSibling ? footer.previousElementSibling.tagName : null;
-    var data = {
-      phase: phase,
-      innerHeight: window.innerHeight,
-      docScrollHeight: document.documentElement.scrollHeight,
-      bodyMinHeight: document.body ? getComputedStyle(document.body).minHeight : null,
-      pageDisplay: page ? getComputedStyle(page).display : null,
-      contentFlexGrow: content ? getComputedStyle(content).flexGrow : null,
-      primaryFlexGrow: primary ? getComputedStyle(primary).flexGrow : null,
-      footerParentId: fp,
-      contentNextSiblingIdOrTag: cn,
-      footerPreviousSiblingTag: fpv,
-      footerBottom: rect ? Math.round(rect.bottom) : null,
-      gapBelowFooter: rect ? Math.round(window.innerHeight - rect.bottom) : null
-    };
-    fetch("http://127.0.0.1:7577/ingest/a3586764-c693-4131-b4bf-44fd2ece4e95", {
-      method: "POST",
-      headers: { "Content-Type": "application/json", "X-Debug-Session-Id": "34cc3d" },
-      body: JSON.stringify({
-        sessionId: "34cc3d",
-        location: "thankyou.html:layoutDebug",
-        message: "footer vs viewport",
-        data: data,
-        timestamp: Date.now(),
-        hypothesisId: "H2-dom",
-        runId: runId
-      })
-    }).catch(function () {});
-  }
-  document.addEventListener("DOMContentLoaded", function () {
-    logLayout("align-contact", "DOMContentLoaded");
-  });
-  window.addEventListener("load", function () {
-    setTimeout(function () {
-      logLayout("align-contact", "load+100ms");
-    }, 100);
-  });
-})();
-</script>
-<!-- #endregion -->
-<script src="/voyah/js/hide-footer.js"></script>
+		<script src="/voyah/js/hide-footer.js"></script>
 </body>
 </html>
