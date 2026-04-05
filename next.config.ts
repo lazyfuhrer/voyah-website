@@ -65,6 +65,10 @@ const nextConfig: NextConfig = {
         destination: "/voyah/contact-us/index.html",
       },
       {
+        source: "/en/contact-us/thankyou",
+        destination: "/voyah/contact-us/thankyou.html",
+      },
+      {
         source: "/en/:path(voyah-dream|voyah-free|privacy-policy|terms-of-use)",
         destination: "/voyah/:path/index.html",
       },
