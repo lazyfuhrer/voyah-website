@@ -8,7 +8,7 @@ const inter = Inter({
   variable: "--font-inter",
 });
 
-const GTM_ID = "GTM-MH36GFJL";
+const GTM_ID = "GTM-WQ24PKSC";
 
 export const metadata: Metadata = {
   title: "VOYAH - Coming Soon",
