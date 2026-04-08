@@ -388,6 +388,13 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 </div></div>
 </div>
 
+<div  class="jet-form-builder-row field-type-text-field" >
+<div class="jet-form-builder__label">
+<div class="jet-form-builder__label-text">المدينة <span class="jet-form-builder__required">*</span></div></div><div class="jet-form-builder__field-wrap">
+				<input required name="city" id="city" type="text" data-field-name="city" class="jet-form-builder__field text-field" autocomplete="address-level2">
+					</div>
+</div>
+
 
 <div  class="jet-form-builder-row field-type-textarea-field" >
 <div class="jet-form-builder__label">
@@ -422,6 +429,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         subject: (fd.get("subject") || "").toString().trim(),
         email: (fd.get("email") || "").toString().trim(),
         phone_number: (fd.get("phone_number") || "").toString().trim(),
+        city: (fd.get("city") || "").toString().trim(),
         message: (fd.get("message") || "").toString().trim(),
         sheet: SHEET
       };
