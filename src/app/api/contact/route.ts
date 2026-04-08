@@ -12,6 +12,7 @@ export async function POST(request: NextRequest) {
       email,
       phone_number: phoneNumberRaw,
       phone: phoneAlt,
+      city,
       message,
       sheet,
     } = body;
@@ -23,6 +24,7 @@ export async function POST(request: NextRequest) {
       !subject?.trim() ||
       !email?.trim() ||
       !phone_number?.trim() ||
+      !city?.trim() ||
       !message?.trim()
     ) {
       console.log(`POST /api/contact - 400 (missing fields)`);
@@ -109,6 +111,7 @@ export async function POST(request: NextRequest) {
       subject.trim(),
       email.trim(),
       phone_number.trim(),
+      city.trim(),
       message.trim(),
     ];
 
